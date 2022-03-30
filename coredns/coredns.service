@@ -5,6 +5,11 @@ After=network.target
 [Service]
 ExecStart=/usr/sbin/coredns -conf /etc/coredns/Corefile
 
+# default=bytes, support K,M,G,T
+MemoryMax=256M
+CPUWeight=5000
+# CPUWeight=1-10000
+
 [Install]
 WantedBy=multi-user.target
 
