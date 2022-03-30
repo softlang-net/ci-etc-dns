@@ -1,0 +1,14 @@
+[Unit]
+Description=coreDNS caching server.
+After=network.target
+
+[Service]
+ExecStart=/usr/sbin/coredns -conf /etc/coredns/Corefile
+
+[Install]
+WantedBy=multi-user.target
+
+## /usr/lib/systemd/system/coredns.service
+# 1. cp coredns /usr/sbin/coredns
+# 2. cp Corefile /etc/coredns/Corefile
+# 3. cp hosts.cfg /etc/coredns/hosts.cfg

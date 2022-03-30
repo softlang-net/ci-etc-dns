@@ -1,0 +1,24 @@
+.:53 {
+    health localhost:5380 #/helath
+    #prometheus
+    cache 60
+    # 负载均衡，开启DNS记录轮询策略
+    loadbalance
+    # 上面etcd未查询到的请求转发给设置的DNS服务器解析
+    forward . 183.60.83.19 183.60.82.98
+    # 输出错误
+    errors
+    #log # 打印日志
+    reload 10s
+    # https://coredns.io/plugins/hosts/
+    # hosts [FILE [ZONES...]] { can only be used once per Server Block
+    # hosts /etc/coredns/hosts.cfg dev dev.cc dc vip z1 { # for coredns.service
+    hosts hosts.cfg dev dev.cc dc vip z1 {
+        # inline begin
+        81.69.222.3     t3.dev.dc
+        # inline end
+        ttl 600 # 10mins
+        reload  10s
+        fallthrough
+    }
+}
