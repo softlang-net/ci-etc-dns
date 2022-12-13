@@ -1,19 +1,28 @@
 [Unit]
-Description=coreDNS caching server.
+Description=CoreDNS DNS server
+Documentation=https://coredns.io
 After=network.target
 
 [Service]
-ExecStart=/usr/sbin/coredns -conf /etc/coredns/Corefile
-
-# default=bytes, support K,M,G,T
-MemoryMax=256M
-CPUWeight=5000
-# CPUWeight=1-10000
+MemoryLimit=256M
+PermissionsStartOnly=true
+LimitNOFILE=1048576
+LimitNPROC=512
+CapabilityBoundingSet=CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
+User=coredns
+WorkingDirectory=~
+ExecStart=/usr/bin/coredns -conf=/etc/coredns/Corefile
+ExecReload=/bin/kill -SIGUSR1 $MAINPID
+Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target
 
 ## /usr/lib/systemd/system/coredns.service
-# 1. cp coredns /usr/sbin/coredns
+# 1. useradd coredns -s /sbin/nologin -c 'coredns.service' -d /var/lib/coredns -m
+# 2. systemctl edit --full -f coredns.service
+# 1. cp coredns /usr/bin/coredns
 # 2. cp Corefile /etc/coredns/Corefile
 # 3. cp hosts.cfg /etc/coredns/hosts.cfg
