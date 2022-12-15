@@ -1,3 +1,4 @@
+#### etcd member management
 
 ```shell
 # ------ run on the normal member (etcd0) ------
@@ -21,6 +22,8 @@ ETCD_INITIAL_CLUSTER_STATE="existing"
 # ---- run on new member etcd1 -----
 systemctl start etcd
 ```
+
+- create the etcd service
 
 ```conf
 # systemctl edit --full -f etcd.serice
