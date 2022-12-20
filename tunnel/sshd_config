@@ -1,0 +1,14 @@
+# create user: useradd -m -s /sbin/nologin vpn
+
+# interval settings
+ClientAliveInterval 15
+ClientAliveCountMax 3
+
+# only allow tunnel
+Match User vpn
+    AllowTcpForwarding yes   # 这个是默认配置，如果没改过的话可以不加
+    X11Forwarding no  # 禁止x11 forwarding
+    GatewayPorts no  # yes=允许ssh -R参数bind所有ip，否则只允许bind 127.0.0.1
+    AllowAgentForwarding no
+    ForceCommand echo 'This account can only be used for TCP proxy'
+    PasswordAuthentication yes
